@@ -1,0 +1,38 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - '27017:27017'
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/wrs_prod
+      NODE_ENV: production
+      TRUST_PROXY: 'true'
+      COOKIE_SECURE: 'true'
+    ports:
+      - '4000:4000'
+
+  worker:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/wrs_prod
+      NODE_ENV: production
+    command: ['node', 'apps/server/dist/worker.js']
+
+volumes:
+  mongo_data:

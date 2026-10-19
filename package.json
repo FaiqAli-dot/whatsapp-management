@@ -1,0 +1,39 @@
+{
+  "name": "whatsapp-review-saas",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@wrs/server & npm run dev --workspace=@wrs/client",
+    "dev:server": "npm run dev --workspace=@wrs/server",
+    "dev:client": "npm run dev --workspace=@wrs/client",
+    "build": "npm run build --workspace=@wrs/shared && npm run build --workspace=@wrs/server && npm run build --workspace=@wrs/client",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,yml,yaml,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,yml,yaml,css}\"",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "npm run test:unit --workspace=@wrs/server && npm run test:unit --workspace=@wrs/shared",
+    "test:integration": "npm run test:integration --workspace=@wrs/server",
+    "test:security": "npm run test:security --workspace=@wrs/server",
+    "test:e2e": "npm run test:e2e --workspace=@wrs/client",
+    "test:load": "npm run test:load --workspace=@wrs/server",
+    "test:meta-manual": "echo 'MANUAL VERIFICATION REQUIRED — see docs/META_LIVE_TEST.md'",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit && npm run test:integration && npm run test:security && npm run build",
+    "verify:full": "npm run verify && npm run test:e2e",
+    "start": "npm run start --workspace=@wrs/server",
+    "migrate": "npm run migrate --workspace=@wrs/server",
+    "worker": "npm run worker --workspace=@wrs/server",
+    "audit:deps": "npm audit --omit=dev --audit-level=high"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
