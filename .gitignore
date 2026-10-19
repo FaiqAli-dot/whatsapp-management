@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+coverage/
+playwright-report/
+test-results/
+blob-report/
+apps/client/playwright-report/
+apps/server/load-test-results.json
+.DS_Store
+*.tgz
+.mongo-binaries/
+.cache/
